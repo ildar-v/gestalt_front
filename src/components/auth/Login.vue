@@ -5,31 +5,30 @@
                 <v-card>
                     <v-card-title primary-title class="justify-center headline" block>Вход</v-card-title>
                     <v-card-text class="pt-4">
-                        <div>
-                            <v-form v-model="valid" ref="form">
-                                <v-text-field
-                                    label="Введите имя пользователя"
-                                    v-model="email"
-                                    :rules="emailRules"
-                                    required
-                                ></v-text-field>
-                                <v-text-field
-                                    label="Введите пароль"
-                                    v-model="password"
-                                    min="6"
-                                    type="password"
-                                    :rules="passwordRules"
-                                    counter
-                                    required
-                                ></v-text-field>
-                                <v-layout justify-space-between>
-                                    <v-btn
-                                        @click="submit"
-                                        :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }"
-                                    >Login</v-btn>
-                                </v-layout>
-                            </v-form>
-                        </div>
+                        <v-form v-model="valid" ref="form" @submit="submit">
+                            <v-text-field
+                                label="Введите имя пользователя"
+                                v-model="email"
+                                :rules="emailRules"
+                                required
+                            ></v-text-field>
+                            <v-text-field
+                                label="Введите пароль"
+                                v-model="password"
+                                min="6"
+                                type="password"
+                                :rules="passwordRules"
+                                counter
+                                required
+                            ></v-text-field>
+                            <v-layout justify-space-between>
+                                <v-btn
+                                    type="submit"
+                                    @click="submit"
+                                    :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }"
+                                >Login</v-btn>
+                            </v-layout>
+                        </v-form>
                     </v-card-text>
                 </v-card>
             </v-flex>
