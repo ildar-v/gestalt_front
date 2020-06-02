@@ -1,5 +1,15 @@
 import axios from "axios";
 
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
 export default {
     namespaced: true,
     state: {
@@ -8,7 +18,10 @@ export default {
     },
     getters: {
         getAuthenticated: state => state.authenticated,
-        getCurrentUser: state => state.currentUser,
+        getCurrentUser: () => {
+            let user = parseJwt(axios.defaults.headers.common['Authorization']);
+            return { id: user.id, username: user.username, firstName: user.firstName, lastName: user.lastName };
+        },
     },
     mutations: {
         updateAuthenticated(state, value) {
